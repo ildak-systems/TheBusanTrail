@@ -79,7 +79,7 @@ namespace TheBusanTrail
         
         FoodTracker foodtracker = new FoodTracker();
         CharacterParty party1 = new CharacterParty();
-        UIMapping mapping = new UIMapping(AssetManager);
+        UIMapping mapping;
 
 
         public Game1()
@@ -87,6 +87,11 @@ namespace TheBusanTrail
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            Character father1 = new Father("Harry");
+            Character child1 = new Child("Cole");
+            party1.Add(father1);
+            party1.Add(child1);
         }
 
         protected override void Initialize()
@@ -107,8 +112,7 @@ namespace TheBusanTrail
 
             int num = 1;
             AssetManager.Add(num, meagerButton);
-           
-
+            mapping = new UIMapping(AssetManager);
 
         }
 
@@ -133,7 +137,6 @@ namespace TheBusanTrail
             _spriteBatch.Begin();
 
             DrawGameBox();
-            
             mapping.Draw(gameTime, Arial_20, _spriteBatch);
 
             _spriteBatch.End();
