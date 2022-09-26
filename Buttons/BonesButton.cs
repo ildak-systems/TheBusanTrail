@@ -8,7 +8,7 @@ using System.Text;
 
 namespace TheBusanTrail.Buttons
 {
-    class MeagerButton
+    class BonesButton
     {
         Texture2D Image;
         Vector2 Position;
@@ -16,10 +16,10 @@ namespace TheBusanTrail.Buttons
         int Height;
         FoodTracker food = new FoodTracker();
 
-        public MeagerButton(Texture2D image)
+        public BonesButton(Texture2D image)
         {
             Image = image;
-            Position = new Vector2(1070, 60);
+            Position = new Vector2(1000, 60);
             Width = image.Width;
             Height = image.Height;
         }
@@ -31,7 +31,7 @@ namespace TheBusanTrail.Buttons
 
         public Vector2 getPosition()
         {
-            return Position; 
+            return Position;
         }
 
         public int getWidth()
@@ -46,9 +46,7 @@ namespace TheBusanTrail.Buttons
 
         public void clickButton()
         {
-            food.setFoodMode(FoodMode.meager);
+            food.setFoodMode(FoodMode.barebones);
         }
-            
-
     }
 }

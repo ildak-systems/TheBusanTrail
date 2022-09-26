@@ -5,25 +5,24 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TheBusanTrail.Tracker;
 
 namespace TheBusanTrail.Buttons
 {
-    class MeagerButton
+    class GruelingButton
     {
         Texture2D Image;
         Vector2 Position;
         int Width;
         int Height;
-        FoodTracker food = new FoodTracker();
-
-        public MeagerButton(Texture2D image)
+        SpeedTracker speed = new SpeedTracker();
+        public GruelingButton(Texture2D image)
         {
             Image = image;
-            Position = new Vector2(1070, 60);
+            Position = new Vector2(1140, 125);
             Width = image.Width;
             Height = image.Height;
         }
-
         public Texture2D getImage()
         {
             return Image;
@@ -31,7 +30,7 @@ namespace TheBusanTrail.Buttons
 
         public Vector2 getPosition()
         {
-            return Position; 
+            return Position;
         }
 
         public int getWidth()
@@ -43,12 +42,10 @@ namespace TheBusanTrail.Buttons
         {
             return Height;
         }
-
         public void clickButton()
         {
-            food.setFoodMode(FoodMode.meager);
+            speed.setSpeed(SpeedMode.grueling);
         }
-            
-
     }
 }
+

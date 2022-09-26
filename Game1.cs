@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TheBusanTrail.Characters;
+using TheBusanTrail.Tracker;
 
 // To draw a the UI: Make a method that draws both UI and the value. e.g: Food: 32lbs. 
 // For each value. So make draw method for both food and money, even though they are going to be a very similar code.
@@ -18,13 +19,18 @@ using TheBusanTrail.Characters;
 // DrawGameBox(), this method takes in the position of where the gamebox will go to and includes all the methods that 
 // draws the party, the variables that goes in the box. 
 
+// 9/25
+// Know more info about: 1. Info dates 2. Settings, for maps. 
+// Calculating character stats: 1. Stuff that effects directly to a specific character should work with individual HealthCalc
+// class. 2. Stuff that effects the entire party such as: weather conditions, food conditions: should use the partyHealthcalc
+
 
 namespace TheBusanTrail
 {
     // Global modes: These are accessible in every class
 
-    // FoodMode: Controlled in FoodTracker class
-    enum FoodMode
+    // FoodMode: Controlled in FoodTracker class.
+    enum FoodMode //  User Input
     {
         barebones,
         meager,
@@ -39,7 +45,7 @@ namespace TheBusanTrail
     }
 
     // Use for controlling the amount of moral is decreasing per day. Affects moral and health?
-    enum SpeedMode
+    enum SpeedMode // User Input
     {
         slow,
         steady,
@@ -64,20 +70,26 @@ namespace TheBusanTrail
 
         static Dictionary<int, Texture2D> AssetManager = new Dictionary<int, Texture2D>(5);
 
-        // Assets for AssetManager
+        // food buttons
+        Texture2D bonesButton;
         Texture2D meagerButton;
+        Texture2D fillingButton;
+
+        // speed buttons
+        Texture2D slowButton;
+        Texture2D steadyButton;
+        Texture2D gruelingButton;
+
+        // fonts
         SpriteFont Arial_20;
 
         // Used for dates, should work with weather. Determines the rate of health/moral of characters and random events.
         double Year = 0;
         int Month = 0;
         int Day = 0;
-
-        // Used for displaying the progress of the game. 
-        int milesTraveled = 0;
-        int milesUntilNextDestination = 0;
         
         FoodTracker foodtracker = new FoodTracker();
+        SpeedTracker speedtracker = new SpeedTracker();
         CharacterParty party1 = new CharacterParty();
         UIMapping mapping;
 
@@ -108,10 +120,24 @@ namespace TheBusanTrail
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             // Load font.spritefont
             Arial_20 = Content.Load<SpriteFont>("font");
+
+            // food buttons
+            bonesButton = Content.Load<Texture2D>("bonesButton");
             meagerButton = Content.Load<Texture2D>("meagerButton");
+            fillingButton = Content.Load<Texture2D>("fillingButton");
+
+            // speed buttons
+            slowButton = Content.Load<Texture2D>("slowButton");
+            steadyButton = Content.Load<Texture2D>("steadyButton");
+            gruelingButton = Content.Load<Texture2D>("gruelingButton");
 
             int num = 1;
             AssetManager.Add(num, meagerButton);
+            AssetManager.Add(2, fillingButton);
+            AssetManager.Add(3, bonesButton);
+            AssetManager.Add(4, slowButton);
+            AssetManager.Add(5, steadyButton);
+            AssetManager.Add(6, gruelingButton);
             mapping = new UIMapping(AssetManager);
 
         }
@@ -124,7 +150,7 @@ namespace TheBusanTrail
             }
             mState = Mouse.GetState();
             mapping.Update(gameTime, mState);
-            
+            speedtracker.Update(gameTime);
             foodtracker.Update(gameTime);
 
             base.Update(gameTime);
@@ -137,6 +163,7 @@ namespace TheBusanTrail
             _spriteBatch.Begin();
 
             DrawGameBox();
+            DrawMiles();
             mapping.Draw(gameTime, Arial_20, _spriteBatch);
 
             _spriteBatch.End();
@@ -158,7 +185,8 @@ namespace TheBusanTrail
 
         protected void DrawMiles()
         {
-
+            string st_food = Math.Ceiling(speedtracker.getMiles()).ToString();
+            _spriteBatch.DrawString(Arial_20, "Miles Traveled: " + st_food + " Miles ", new Vector2(500, 500), Color.White);
         }
 
         protected void DrawGameBox()
@@ -172,6 +200,7 @@ namespace TheBusanTrail
         {
             int initial_Y = 500;
             Vector2 position = new Vector2(0, initial_Y);
+            
             
             for (int i = 0; i < party.PartySize(); i++)
             {

@@ -13,14 +13,14 @@ namespace TheBusanTrail
     class FoodTracker
     {
         static double Food;
-        
-        static FoodMode FMode = FoodMode.filling;
+        static FoodMode FMode;
         GamemodeTracker mode = new GamemodeTracker();
         // Use for controlling the amount of food that is decreasing per day. Affects health.
 
         public FoodTracker()
         {
             Food = 100;
+            FMode = FoodMode.filling;
         }
 
         public void Update(GameTime gameTime)
