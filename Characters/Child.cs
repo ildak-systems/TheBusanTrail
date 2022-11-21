@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using TheBusanTrail.Characters;
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 namespace TheBusanTrail
 {
     // Idea: UnhealthyChild variant where the health and moral of the child is little, but increases the moral and health of
@@ -10,10 +14,11 @@ namespace TheBusanTrail
     class Child : Character
     {
         private string name = "";
-        private int Health;
+        private double Health;
         private int Moral; 
         private int MaxHealth;
         private int MaxMoral;
+        HealthCalculator HealthCalc = new HealthCalculator();
 
         private const double percent = 0.5;
 
@@ -24,8 +29,14 @@ namespace TheBusanTrail
             Health = Convert.ToInt32(base.GetCurrentHealth() * percent);
             Moral = Convert.ToInt32(base.GetCurrentMoral() * percent);
             MaxHealth = Convert.ToInt32(base.GetMaxHealth() * percent);
-            MaxMoral = Convert.ToInt32(base.GetMaxMoral() * percent);
-      
+            MaxMoral = Convert.ToInt32(base.GetMaxMoral() * percent);    
+        }
+
+        // Update character health, moral, injury, disease 
+        public override void Update(GameTime gameTime)
+        {
+            HealthCalc.UpdateHealth_Child(this, gameTime);
+            // update moral
         }
 
         public override string getName()
@@ -33,9 +44,14 @@ namespace TheBusanTrail
             return name;
         }
 
-        public override int GetCurrentHealth()
+        public override double GetCurrentHealth()
         {
             return Health;
+        }
+
+        public override void setHealth(double health)
+        {
+            Health += health;
         }
 
         public override int GetCurrentMoral()
@@ -52,14 +68,5 @@ namespace TheBusanTrail
         {
             return MaxMoral;
         }
-
-
-
-
-
-
-
-
-
     }
 }

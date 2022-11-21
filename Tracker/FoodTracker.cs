@@ -12,15 +12,15 @@ namespace TheBusanTrail
 {
     class FoodTracker
     {
-        static double Food;
-        
-        static FoodMode FMode = FoodMode.filling;
+        float Food;
+        static FoodMode FMode;
         GamemodeTracker mode = new GamemodeTracker();
         // Use for controlling the amount of food that is decreasing per day. Affects health.
 
         public FoodTracker()
         {
             Food = 100;
+            FMode = FoodMode.filling;
         }
 
         public void Update(GameTime gameTime)
@@ -31,17 +31,17 @@ namespace TheBusanTrail
             {
                 if (FMode == FoodMode.barebones)
                 {
-                    Food -= dt / 5;
+                    Food -= (float)dt / 5;
                 }
 
                 else if (FMode == FoodMode.meager)
                 {
-                    Food -= dt / 2;
+                    Food -= (float)dt / 2;
                 }
 
                 else if (FMode == FoodMode.filling)
                 {
-                    Food -= dt;
+                    Food -= (float)dt;
                 }
             }
             
