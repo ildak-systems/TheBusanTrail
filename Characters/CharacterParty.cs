@@ -16,7 +16,12 @@ namespace TheBusanTrail.Characters
 
         public CharacterParty() { }
 
-        
+        public void Update(GameTime gameTime)
+        {
+            Party[0].Update(gameTime);
+            Party[1].Update(gameTime);
+            Party[2].Update(gameTime);   
+        }
 
         public List<Character> getParty()
         {

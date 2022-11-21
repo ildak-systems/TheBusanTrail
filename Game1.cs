@@ -28,7 +28,6 @@ using TheBusanTrail.Tracker;
 namespace TheBusanTrail
 {
     // Global modes: These are accessible in every class
-
     // FoodMode: Controlled in FoodTracker class.
     enum FoodMode //  User Input
     {
@@ -61,6 +60,14 @@ namespace TheBusanTrail
         verycold,
     }
 
+    enum Seasons
+    {
+        spring,
+        summer,
+        fall,
+        winter
+    }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -68,7 +75,7 @@ namespace TheBusanTrail
         
         MouseState mState;
 
-        static Dictionary<int, Texture2D> AssetManager = new Dictionary<int, Texture2D>(5);
+        static Dictionary<int, Texture2D> AssetManager = new Dictionary<int, Texture2D>();
 
         // food buttons
         Texture2D bonesButton;
@@ -90,20 +97,25 @@ namespace TheBusanTrail
         
         FoodTracker foodtracker = new FoodTracker();
         SpeedTracker speedtracker = new SpeedTracker();
+        MoneyTracker moneytracker = new MoneyTracker();
         CharacterParty party1 = new CharacterParty();
+        LocationTracker locationtracker = new LocationTracker();
+        DateTracker datetracker = new DateTracker();
         UIMapping mapping;
 
-
+        // Characters
+        Character father1 = new Father("Harry");
+        Character child1 = new Child("Cole");
+        Character child2 = new Child("Fred");
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            Character father1 = new Father("Harry");
-            Character child1 = new Child("Cole");
             party1.Add(father1);
             party1.Add(child1);
+            party1.Add(child2);
         }
 
         protected override void Initialize()
@@ -131,19 +143,17 @@ namespace TheBusanTrail
             steadyButton = Content.Load<Texture2D>("steadyButton");
             gruelingButton = Content.Load<Texture2D>("gruelingButton");
 
-            int num = 1;
-            AssetManager.Add(num, meagerButton);
+            AssetManager.Add(1, meagerButton);
             AssetManager.Add(2, fillingButton);
             AssetManager.Add(3, bonesButton);
             AssetManager.Add(4, slowButton);
             AssetManager.Add(5, steadyButton);
             AssetManager.Add(6, gruelingButton);
             mapping = new UIMapping(AssetManager);
-
         }
 
         protected override void Update(GameTime gameTime)
-        {
+        {    
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
@@ -152,6 +162,10 @@ namespace TheBusanTrail
             mapping.Update(gameTime, mState);
             speedtracker.Update(gameTime);
             foodtracker.Update(gameTime);
+            locationtracker.Update(gameTime);
+            party1.Update(gameTime);
+            datetracker.Update(gameTime);
+            
 
             base.Update(gameTime);
         }
@@ -164,6 +178,7 @@ namespace TheBusanTrail
 
             DrawGameBox();
             DrawMiles();
+            DrawDate();
             mapping.Draw(gameTime, Arial_20, _spriteBatch);
 
             _spriteBatch.End();
@@ -178,21 +193,47 @@ namespace TheBusanTrail
         }
 
         protected void DrawMoney(Vector2 position, SpriteFont font, int direction)
+        { 
+            string st_money = moneytracker.getMoney().ToString();
+            _spriteBatch.DrawString(font, "Money: W " + st_money, position, Color.White);
+        }
+
+        protected void DrawLocation(Vector2 position, SpriteFont font, int direction)
         {
-            //string st_money = tracker.getMoneyAmount().ToString();
-            //_spriteBatch.DrawString(font, "Money: W " + st_money, position, Color.White);
+            string st_location = locationtracker.getCurrentLocation();
+            _spriteBatch.DrawString(font, "Location: " + st_location, position, Color.White);
         }
 
         protected void DrawMiles()
         {
-            string st_food = Math.Ceiling(speedtracker.getMiles()).ToString();
-            _spriteBatch.DrawString(Arial_20, "Miles Traveled: " + st_food + " Miles ", new Vector2(500, 500), Color.White);
+            string st_miles = Math.Ceiling(speedtracker.getMiles()).ToString();
+            _spriteBatch.DrawString(Arial_20, "Miles Traveled: " + st_miles + " Miles ", new Vector2(500, 500), Color.White);
+        }
+
+        protected void DrawDate()
+        {
+            string st_month = datetracker.getDate().Month.ToString();
+            _spriteBatch.DrawString(Arial_20, st_month, new Vector2(500, 600), Color.White);
+
+            // draw /
+            _spriteBatch.DrawString(Arial_20, "/", new Vector2(520, 600), Color.White);
+
+            string st_day = datetracker.getDate().Day.ToString();
+            _spriteBatch.DrawString(Arial_20, st_day, new Vector2(530, 600), Color.White);
+
+            // draw /
+            _spriteBatch.DrawString(Arial_20, "/", new Vector2(560, 600), Color.White);
+
+            string st_year = datetracker.getDate().Year.ToString();
+            _spriteBatch.DrawString(Arial_20, st_year, new Vector2(570, 600), Color.White);
+
         }
 
         protected void DrawGameBox()
         {
             DrawFood(new Vector2(20, 20), Arial_20, 3);
             DrawMoney(new Vector2(250, 20), Arial_20, 3);
+            DrawLocation(new Vector2(500, 20), Arial_20, 3);
             DrawParty(party1, Arial_20);
         }
 
@@ -206,10 +247,13 @@ namespace TheBusanTrail
             {
                 position.X += 100;
                 Character temp = party.getParty()[i];
+                // Print Name
                 _spriteBatch.DrawString(font, temp.getName().ToString(), position, Color.White); // Draw name
                 position.Y += 30;
-                _spriteBatch.DrawString(font, temp.GetCurrentHealth().ToString(), position, Color.White); // Draw Health
+                // Print Health
+                _spriteBatch.DrawString(font, Math.Ceiling(temp.GetCurrentHealth()).ToString(), position, Color.White); // Draw Health
                 position.Y += 30;
+                // Print Moral
                 _spriteBatch.DrawString(font, temp.GetCurrentMoral().ToString(), position, Color.White); // Draw Moral
                 position.Y = initial_Y;
                                                                                                          

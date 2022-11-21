@@ -21,11 +21,22 @@ namespace TheBusanTrail
     class Father : Character
     {
         private string name = "";
+        double Health;
+        int Moral;
+        int MaxHealth;
+        int MaxMoral;
+        
         private Vector2 initial_position = new Vector2(500, 500);
         private Jobs job = Jobs.none;
+
+        HealthCalculator Healthcalc = new HealthCalculator();
         public Father() { }
         public Father(string name)
         {
+            Health = base.GetCurrentHealth();
+            Moral = base.GetCurrentMoral();
+            MaxHealth = base.GetMaxHealth();
+            MaxMoral = base.GetMaxMoral();
             this.name = name;
         }
 
@@ -34,5 +45,36 @@ namespace TheBusanTrail
             return name;
         }
 
+        public override void Update(GameTime gameTime) 
+        {
+            double dt = gameTime.ElapsedGameTime.TotalSeconds;
+            // health
+            Healthcalc.UpdateHealth_Adult(this, gameTime);
+        }
+
+        public override double GetCurrentHealth()
+        {
+            return Health;
+        }
+
+        public override void setHealth(double health)
+        {
+            Health += health;
+        }
+
+        public override int GetCurrentMoral()
+        {
+            return Moral;
+        }
+
+        public override int GetMaxHealth()
+        {
+            return MaxHealth;
+        }
+
+        public override int GetMaxMoral()
+        {
+            return MaxMoral;
+        }
     }
 }

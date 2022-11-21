@@ -13,15 +13,20 @@ namespace TheBusanTrail
     // update health of characters
     class HealthCalculator
     {
-        double Health;
-
-        public HealthCalculator()
+        public void UpdateHealth_Adult(Character character, GameTime gameTime)
         {
+            double dt = gameTime.ElapsedGameTime.TotalSeconds;
 
+            // health           
+            character.setHealth(dt/3);
         }
 
-        public void UpdateHealth(Character character, GameTime gameTime)
-        { 
+        public void UpdateHealth_Child(Character character, GameTime gameTime)
+        {
+            double dt = gameTime.ElapsedGameTime.TotalSeconds;
+
+            // health
+            character.setHealth(dt);
 
         }
     }

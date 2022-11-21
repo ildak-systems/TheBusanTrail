@@ -14,11 +14,11 @@ namespace TheBusanTrail
     class Child : Character
     {
         private string name = "";
-        private int Health;
+        private double Health;
         private int Moral; 
         private int MaxHealth;
         private int MaxMoral;
-        HealthCalculator calc = new HealthCalculator();
+        HealthCalculator HealthCalc = new HealthCalculator();
 
         private const double percent = 0.5;
 
@@ -29,14 +29,13 @@ namespace TheBusanTrail
             Health = Convert.ToInt32(base.GetCurrentHealth() * percent);
             Moral = Convert.ToInt32(base.GetCurrentMoral() * percent);
             MaxHealth = Convert.ToInt32(base.GetMaxHealth() * percent);
-            MaxMoral = Convert.ToInt32(base.GetMaxMoral() * percent);
-      
+            MaxMoral = Convert.ToInt32(base.GetMaxMoral() * percent);    
         }
 
         // Update character health, moral, injury, disease 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            calc.UpdateHealth(this, gameTime);
+            HealthCalc.UpdateHealth_Child(this, gameTime);
             // update moral
         }
 
@@ -45,9 +44,14 @@ namespace TheBusanTrail
             return name;
         }
 
-        public override int GetCurrentHealth()
+        public override double GetCurrentHealth()
         {
             return Health;
+        }
+
+        public override void setHealth(double health)
+        {
+            Health += health;
         }
 
         public override int GetCurrentMoral()
@@ -64,14 +68,5 @@ namespace TheBusanTrail
         {
             return MaxMoral;
         }
-
-
-
-
-
-
-
-
-
     }
 }

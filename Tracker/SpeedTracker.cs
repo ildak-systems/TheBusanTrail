@@ -13,17 +13,14 @@ namespace TheBusanTrail.Tracker
         // maps, use dictionary. key: name of landmark, value: miles away from point 0. Remove keys from array when arriving
         // Used for displaying the progress of the game. 
         
-        static double milesTraveled;
-        static SpeedMode Smode;
+        static double milesTraveled = 0;
+        static SpeedMode Smode = SpeedMode.steady;
         static GamemodeTracker mode = new GamemodeTracker();
         static int milesUntilNextDestination;
 
 
-        public SpeedTracker()
-        {
-            Smode = SpeedMode.grueling;
-            milesTraveled = 0;
-        }
+        public SpeedTracker() { }
+        
         public void Update(GameTime gameTime)
         {
             double dt = gameTime.ElapsedGameTime.TotalSeconds;
