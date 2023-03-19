@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "9zA/1Jmuvh6X/RWEvWoQb5Ip9HX72s5vlaHmdiqCVcbW+cBEYg5wvLdPQsGjhnrjQkW9Jc1lr7DL2tbreZayLQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ildak\\source\\TheBusanTrail\\TheBusanTrail\\TheBusanTrail.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ildak\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\ildak\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
+  ],
+  "logs": []
+}
