@@ -14,6 +14,7 @@ namespace TheBusanTrail
     class Child : Character
     {
         private string name = "";
+        Texture2D texture;
         private double Health;
         private int Moral; 
         private int MaxHealth;
@@ -23,9 +24,10 @@ namespace TheBusanTrail
         private const double percent = 0.5;
 
         public Child() {}
-        public Child(string name)
+        public Child(string name, Texture2D texture)
         {
             this.name = name;
+            this.texture = texture;
             Health = Convert.ToInt32(base.GetCurrentHealth() * percent);
             Moral = Convert.ToInt32(base.GetCurrentMoral() * percent);
             MaxHealth = Convert.ToInt32(base.GetMaxHealth() * percent);
@@ -35,8 +37,14 @@ namespace TheBusanTrail
         // Update character health, moral, injury, disease 
         public override void Update(GameTime gameTime)
         {
+            // update health, decrease health as the game runs
             HealthCalc.UpdateHealth_Child(this, gameTime);
             // update moral
+        }
+
+        public override void TakeDamage(double damage)
+        {
+            Health -= damage;
         }
 
         public override string getName()
@@ -51,7 +59,7 @@ namespace TheBusanTrail
 
         public override void setHealth(double health)
         {
-            Health += health;
+            Health = health;
         }
 
         public override int GetCurrentMoral()

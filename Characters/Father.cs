@@ -21,6 +21,7 @@ namespace TheBusanTrail
     class Father : Character
     {
         private string name = "";
+        Texture2D texture;
         double Health;
         int Moral;
         int MaxHealth;
@@ -31,7 +32,7 @@ namespace TheBusanTrail
 
         HealthCalculator Healthcalc = new HealthCalculator();
         public Father() { }
-        public Father(string name)
+        public Father(string name, Texture2D texture)
         {
             Health = base.GetCurrentHealth();
             Moral = base.GetCurrentMoral();
@@ -51,6 +52,10 @@ namespace TheBusanTrail
             // health
             Healthcalc.UpdateHealth_Adult(this, gameTime);
         }
+        public override void TakeDamage(double damage)
+        {
+            Health -= damage;
+        }
 
         public override double GetCurrentHealth()
         {
@@ -59,7 +64,7 @@ namespace TheBusanTrail
 
         public override void setHealth(double health)
         {
-            Health += health;
+            Health = health;
         }
 
         public override int GetCurrentMoral()

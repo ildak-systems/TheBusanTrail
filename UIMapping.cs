@@ -13,7 +13,6 @@ namespace TheBusanTrail
 {
     class UIMapping
     {
-        static Dictionary<int, Texture2D> ContentManager = new Dictionary<int, Texture2D>(5);
         GamemodeTracker mode = new GamemodeTracker();
         FoodTracker food = new FoodTracker();
 
@@ -31,19 +30,23 @@ namespace TheBusanTrail
 
         public UIMapping(Dictionary<int, Texture2D> assets)
         {
-            ContentManager = assets;
-            bonesButton = new BonesButton(assets[3]);
-            meagerButton = new MeagerButton(assets[1]);
-            fillingButton = new FillingButton(assets[2]);
-            slowButton = new SlowButton(assets[4]);
-            steadyButton = new SteadyButton(assets[5]);
-            gruelingButton = new GruelingButton(assets[6]);
+            // ContentManager<int, Sprite2D> gets copied from assets, which is another
+            // Dictionary<int, Sprite2D> that is fully initialized with all the buttons
+            
+            bonesButton = new BonesButton(assets[2]);
+            meagerButton = new MeagerButton(assets[0]);
+            fillingButton = new FillingButton(assets[1]);
+            slowButton = new SlowButton(assets[3]);
+            steadyButton = new SteadyButton(assets[4]);
+            gruelingButton = new GruelingButton(assets[5]);
 
         }
 
         public void Update(GameTime gameTime, MouseState mState)
         {
-
+            // State system: If current global game mode is "traveling", we map the x and y coordinates
+            // When the user clicks on any given x and y fields, it triggers the button's clickButton()
+            // method. 
             if (mode.getMode() == GameMode.traveling)
             {
                 // meager button
@@ -109,6 +112,7 @@ namespace TheBusanTrail
 
         public void Draw(GameTime gameTime, SpriteFont font, SpriteBatch _spriteBatch)
         {
+            // Draw() works just like Update(), and is calling _spriteBatch.Draw() each game time.
             if (mode.getMode() == GameMode.traveling)
             {
                  // bare-bones button

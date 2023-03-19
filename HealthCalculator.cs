@@ -18,7 +18,7 @@ namespace TheBusanTrail
             double dt = gameTime.ElapsedGameTime.TotalSeconds;
 
             // health           
-            character.setHealth(dt/3);
+            character.TakeDamage((float)dt/3);
         }
 
         public void UpdateHealth_Child(Character character, GameTime gameTime)
@@ -26,7 +26,7 @@ namespace TheBusanTrail
             double dt = gameTime.ElapsedGameTime.TotalSeconds;
 
             // health
-            character.setHealth(dt);
+            character.TakeDamage((float)dt);
 
         }
     }

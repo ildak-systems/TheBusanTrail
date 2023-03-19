@@ -18,6 +18,7 @@ namespace TheBusanTrail.Characters
 
         public void Update(GameTime gameTime)
         {
+            // Calls the character's update method in the party.
             Party[0].Update(gameTime);
             Party[1].Update(gameTime);
             Party[2].Update(gameTime);   

@@ -27,8 +27,8 @@ using TheBusanTrail.Tracker;
 
 namespace TheBusanTrail
 {
-    // Global modes: These are accessible in every class
-    // FoodMode: Controlled in FoodTracker class.
+    // Global States
+    // Each mode (states) are controlled in its own class to set() and get()
     enum FoodMode //  User Input
     {
         barebones,
@@ -75,6 +75,7 @@ namespace TheBusanTrail
         
         MouseState mState;
 
+        // Used to associate sprites with numbers
         static Dictionary<int, Texture2D> AssetManager = new Dictionary<int, Texture2D>();
 
         // food buttons
@@ -87,6 +88,12 @@ namespace TheBusanTrail
         Texture2D steadyButton;
         Texture2D gruelingButton;
 
+        // character sprites
+        // passed to a object declared "new", so must be static
+        static Texture2D fatherSprite;
+        static Texture2D child1Sprite;
+        static Texture2D child2Sprite;
+
         // fonts
         SpriteFont Arial_20;
 
@@ -95,18 +102,22 @@ namespace TheBusanTrail
         int Month = 0;
         int Day = 0;
         
+        // initialize all trackers
         FoodTracker foodtracker = new FoodTracker();
         SpeedTracker speedtracker = new SpeedTracker();
         MoneyTracker moneytracker = new MoneyTracker();
         CharacterParty party1 = new CharacterParty();
         LocationTracker locationtracker = new LocationTracker();
         DateTracker datetracker = new DateTracker();
+
+        // initialize mapping for UI
         UIMapping mapping;
 
-        // Characters
-        Character father1 = new Father("Harry");
-        Character child1 = new Child("Cole");
-        Character child2 = new Child("Fred");
+        // initialize default characters
+        // since it is
+        Character father1 = new Father("Harry", fatherSprite);
+        Character child1 = new Child("Cole", child1Sprite);
+        Character child2 = new Child("Fred", child2Sprite);
         
         public Game1()
         {
@@ -133,22 +144,30 @@ namespace TheBusanTrail
             // Load font.spritefont
             Arial_20 = Content.Load<SpriteFont>("font");
 
-            // food buttons
+            // Content Load: food buttons
             bonesButton = Content.Load<Texture2D>("bonesButton");
             meagerButton = Content.Load<Texture2D>("meagerButton");
             fillingButton = Content.Load<Texture2D>("fillingButton");
 
-            // speed buttons
+            // Content Load: speed buttons
             slowButton = Content.Load<Texture2D>("slowButton");
             steadyButton = Content.Load<Texture2D>("steadyButton");
             gruelingButton = Content.Load<Texture2D>("gruelingButton");
 
-            AssetManager.Add(1, meagerButton);
-            AssetManager.Add(2, fillingButton);
-            AssetManager.Add(3, bonesButton);
-            AssetManager.Add(4, slowButton);
-            AssetManager.Add(5, steadyButton);
-            AssetManager.Add(6, gruelingButton);
+            // Content Load: character sprites
+            fatherSprite = Content.Load<Texture2D>("father");
+            child1Sprite = Content.Load<Texture2D>("father");
+            child2Sprite = Content.Load<Texture2D>("father");
+
+            // AssetManager<int, Sprite2D> initialized before. The Dictionary adds the 
+            // initilized sprite objects and associates with a number. Passes it to the
+            // UIMapping constructor. 
+            AssetManager.Add(0, meagerButton);
+            AssetManager.Add(1, fillingButton);
+            AssetManager.Add(2, bonesButton);
+            AssetManager.Add(3, slowButton);
+            AssetManager.Add(4, steadyButton);
+            AssetManager.Add(5, gruelingButton);
             mapping = new UIMapping(AssetManager);
         }
 
@@ -163,6 +182,8 @@ namespace TheBusanTrail
             speedtracker.Update(gameTime);
             foodtracker.Update(gameTime);
             locationtracker.Update(gameTime);
+
+            // effect's character's stats
             party1.Update(gameTime);
             datetracker.Update(gameTime);
             
@@ -179,6 +200,9 @@ namespace TheBusanTrail
             DrawGameBox();
             DrawMiles();
             DrawDate();
+
+            // Drawing for buttons depends on current game mode state, managed by the 
+            // UIMapping class
             mapping.Draw(gameTime, Arial_20, _spriteBatch);
 
             _spriteBatch.End();
@@ -235,6 +259,7 @@ namespace TheBusanTrail
             DrawMoney(new Vector2(250, 20), Arial_20, 3);
             DrawLocation(new Vector2(500, 20), Arial_20, 3);
             DrawParty(party1, Arial_20);
+            //DrawCharacters(party1);
         }
 
         protected void DrawParty(CharacterParty party, SpriteFont font)
@@ -258,6 +283,14 @@ namespace TheBusanTrail
                 position.Y = initial_Y;
                                                                                                          
             }
+        }
+
+        // Draw's the character's associated 
+        protected void DrawCharacters(CharacterParty party)
+        {
+            Vector2 position = new Vector2(400, 200);
+            Character ch = party.getParty()[0];
+            _spriteBatch.Draw(ch.getSprite(), position, Color.White); // Draw name
         }
 
         
