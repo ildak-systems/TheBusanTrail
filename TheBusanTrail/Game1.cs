@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TheBusanTrail.Characters; // import Characters
 
 namespace TheBusanTrail
 {
@@ -9,16 +10,30 @@ namespace TheBusanTrail
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        CharacterParty Party = new CharacterParty(3);
+        Character f1;
+        Character c1;
+        Character c2;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            // initialize characters
+            f1 = new Father("Darrel", 40);
+            c1 = new Child("Max", 7);
+            c2 = new Child("Mary", 13);
+
+            // put characters into party
+
+
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // set resolution
 
             base.Initialize();
         }
@@ -27,7 +42,12 @@ namespace TheBusanTrail
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // initialize Texture2D, load/set sprite
+            Texture2D father;
+            father = Content.Load<Texture2D>("father");
+            f1.setSprite(father);
+
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -36,16 +56,17 @@ namespace TheBusanTrail
                 Exit();
 
             // TODO: Add your update logic here
-
+            
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(f1.getSprite(), new Vector2(100,100), Color.White);
+            _spriteBatch.End();
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
