@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,11 @@ namespace TheBusanTrail.Characters
 
             // child health set of 50 : But faster regeneration
             this.health = 50;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            
         }
     }
 }

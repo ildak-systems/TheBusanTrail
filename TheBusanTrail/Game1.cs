@@ -10,7 +10,7 @@ namespace TheBusanTrail
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        CharacterParty Party = new CharacterParty(3);
+        CharacterParty Party;
         Character f1;
         Character c1;
         Character c2;
@@ -25,9 +25,10 @@ namespace TheBusanTrail
             f1 = new Father("Darrel", 40);
             c1 = new Child("Max", 7);
             c2 = new Child("Mary", 13);
+            Party = new CharacterParty();
 
             // put characters into party
-
+            Party.add(f1); Party.add(c1); Party.add(c2);
 
         }
 

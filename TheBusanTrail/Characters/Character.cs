@@ -8,6 +8,7 @@
 // father f1()
 // f1.age() prints 50;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,10 @@ namespace TheBusanTrail.Characters
             // default value for health
             health = 100;
         }
+
+        // How to declare virtual functions in C#
+        // Other classes can call the update function 
+        public abstract void Update(GameTime gameTime);
 
         public string getName()
         {
