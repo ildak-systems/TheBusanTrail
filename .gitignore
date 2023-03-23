@@ -1,5 +1,6 @@
 .vs
 TheBusanTrail/obj
-TheBusanTrail/obj/Debug/net6.0
-TheBusanTrail/bin/Debug/net6.0
+TheBusanTrail/bin
+TheBusanTrail/Content/bin/*.xnb
+TheBusanTrail/Content/obj
 TheBusanTrail/TheBusanTrail.csproj.user
