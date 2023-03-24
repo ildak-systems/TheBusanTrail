@@ -3,6 +3,6 @@ using System.Collections.Specialized;
 using TheBusanTrail;
 
 
-using var game = new TheBusanTrail.Game1();
+using var game = new TheBusanTrail.MainGame();
 game.Run();
 
