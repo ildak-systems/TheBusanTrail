@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TheBusanTrail
 {
-    internal class Food
+    public class InGameController
     {
+        public InGameController() { }
     }
 }

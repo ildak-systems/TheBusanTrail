@@ -6,16 +6,37 @@ using System.Threading.Tasks;
 
 namespace TheBusanTrail.States
 {
-    enum MainState
+    public struct Button
     {
-        Travel,
-        Pause
+        Action onClick = default;
+        Texture2D image = default;
+        Vector2 position = default;
+        public Button(Action action)
+        {
+            onClick = action;
+        }
+
+        public void Press()
+        {
+            onClick.Invoke();
+        }
+
+    }
+    public enum PrimaryState
+    {
+        None,
+        TitleMode,
+        InGameMode,
+        GameFailMode,
+        GameSuccessMode
     }
 
-    enum FoodState
+    public enum TitleState
     {
-        Barebones,
-        Meager,
-        Filling
+        SelectionMode,
+        StartGameMode,
+        SettingMode
     }
+
+
 }

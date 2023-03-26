@@ -3,6 +3,7 @@ global using Microsoft.Xna.Framework.Graphics;
 global using Microsoft.Xna.Framework.Input;
 using System.ComponentModel;
 using TheBusanTrail.Characters;
+using TheBusanTrail.InGameComponents;
 using TheBusanTrail.States;
 
 namespace TheBusanTrail
@@ -10,16 +11,10 @@ namespace TheBusanTrail
     public class MainGame : Game
     {
         private GraphicsDeviceManager _graphics;
-
-        // must declare public for derived GameComponent classes
+        private PrimaryController primarycontroller;
         public SpriteBatch _spriteBatch;
 
-        // MainGame data members for GameComponent access 
-        public Character f1;
-        public Character c1;
-        public Character c2;
-        public CharacterParty party;
-
+        
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -31,11 +26,8 @@ namespace TheBusanTrail
 
         protected override void Initialize()
         {
-            // set resolution
-            
-            CharacterComponent charc = new CharacterComponent(this);
-            Components.Add(charc);
-
+            primarycontroller = new PrimaryController(this);
+           
             base.Initialize();
         }
 
@@ -46,8 +38,8 @@ namespace TheBusanTrail
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            primarycontroller.setComponents();
+               
 
             base.Update(gameTime);
         }
