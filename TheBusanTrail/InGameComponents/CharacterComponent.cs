@@ -41,6 +41,7 @@ namespace TheBusanTrail.InGameComponents
         // GameComponent class forces public 
         public override void Update(GameTime gameTime)
         {
+       
 
             base.Update(gameTime);
         }
