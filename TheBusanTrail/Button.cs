@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MonoGame.Extended.Input;
 
 namespace TheBusanTrail
 {
@@ -27,15 +28,18 @@ namespace TheBusanTrail
 
         public void Update(MouseState mousestate)
         {
-            bool mousePressed = false;
 
-            if (bounds.Contains(mousestate.Position) && mousestate.LeftButton == ButtonState.Pressed) 
+            if (bounds.Contains(mousestate.Position))
             {
                 // onclick invokes when left button is PRESSED, not PRESSED THEN RELEASED
                 // I cant seem to figure this out. Put it on backlog and work on it later
-                onClick.Invoke();          
+
+                if (MouseExtended.GetState().WasButtonJustDown(MouseButton.Left))
+                {
+                    onClick.Invoke();
+                }
             }
-           
+                           
         }
 
         public void Draw(SpriteBatch spritebatch, MouseState mousestate)

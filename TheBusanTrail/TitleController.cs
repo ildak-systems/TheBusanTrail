@@ -104,7 +104,8 @@ namespace TheBusanTrail
         }
 
         public override void Draw(GameTime gameTime)
-        {       
+        {
+            //spritesortmode.fronttoback
             game._spriteBatch.Begin();
             // Draw Title : Come up with a better method
             game._spriteBatch.DrawString(game.Arial, title, new Vector2(200, 200), Color.White);

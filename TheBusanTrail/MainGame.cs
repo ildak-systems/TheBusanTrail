@@ -68,6 +68,7 @@ namespace TheBusanTrail
             IsMouseVisible = true;
             this._graphics.PreferredBackBufferWidth = 1280;
             this._graphics.PreferredBackBufferHeight = 720;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()

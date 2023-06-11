@@ -1,0 +1,10 @@
+Implement pressed-released button invocation
+	Comment: Download Monogame.Extended's Mouse package where there is a specific method where
+			I can implement this
+
+Settings ingame smaller display
+	Comment: Study about RenderTarget2D
+
+Set up Render Targeting : this is similar to my issue with GameMaker's pixel scale/resolution issue
+	Commment: Learn from that video tutorial by Brent on YouTube and make it so that it works
+			  across all of my drawable gamecomponents
